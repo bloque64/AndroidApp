@@ -1,8 +1,8 @@
 {
   "name": "bloque64",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "Bloque64 Team",
+  "homepage": "http://bloque64.com/",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -27,15 +27,17 @@
     "@ionic/storage": "2.1.3",
     "cordova-android": "7.0.0",
     "cordova-plugin-device": "^2.0.1",
+    "cordova-plugin-inappbrowser": "^2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^1.1.19",
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-whitelist": "^1.3.3",
     "ionic-angular": "3.9.2",
     "ionicons": "3.0.0",
+    "marked": "^0.3.19",
     "rxjs": "5.5.8",
+    "sc2-sdk": "^1.0.2",
     "steem": "^0.7.1",
-    "steemconnect": "0.0.35",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.20"
   },
@@ -50,7 +52,8 @@
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-ionic-keyboard": {}
+      "cordova-plugin-ionic-keyboard": {},
+      "cordova-plugin-inappbrowser": {}
     },
     "platforms": [
       "android"
