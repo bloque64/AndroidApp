@@ -14,6 +14,7 @@ import { HttpModule  } from '@angular/http';
 import { SteemProvider } from '../providers/steem/steem';
 import { SteemconnectProvider } from '../providers/steemconnect/steemconnect';
 import { HttpClientModule } from '@angular/common/http';
+import { Toast } from '@ionic-native/toast';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { HttpClientModule } from '@angular/common/http';
 
   ],
   providers: [
+    Toast,
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },

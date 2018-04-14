@@ -13,21 +13,24 @@ export class SteemProvider {
   constructor(public http: HttpClient) {
     console.log('Hello SteemProvider Provider');
     steem.api.setOptions({ url: 'https://api.steemit.com' });
+
   }
 
 
   getDiscussionsByCreated(limit: number): Promise<any> {
     const query = {
-      "tag": "bloque64",
-      "limit": limit
+      tag: "bloque64",
+      limit: limit
     }
     return new Promise(function (resolve, reject) {
-      steem.api.getDiscussionsByCreated(query, res => {
-        console.log("provider dice", res);
-        resolve(res);
-      }, err => {
-        console.log(err);
-        reject(err);
+      steem.api.getDiscussionsByCreated(query, function (err, response) {
+
+        if (err) {
+          reject(err);
+        } else {
+
+          resolve(response);
+        }
       });
     });
   }
@@ -43,6 +46,19 @@ export class SteemProvider {
   GetContentReplies(author, permlink) {
     steem.api.getContentReplies(author, permlink, function (err, result) {
       console.log(err, result);
+    });
+  }
+
+  getState() {
+    return new Promise(function (resolve, reject) {
+      steem.api.getState('/created/bloque64', res => {
+        console.log("provider dice", res);
+        resolve(res);
+      }, err => {
+        console.log(err);
+        reject(err);
+      });
+
     });
   }
 

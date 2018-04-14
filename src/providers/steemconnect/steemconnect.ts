@@ -12,29 +12,42 @@ export class SteemconnectProvider {
 
   api: any;
   constructor() {
-    this.api = sc2.Initialize({
-      app: 'bloquetest',
-      callbackURL: 'http://localhost:8100',
-      scope: ['vote', 'comment']
-    });
-    
+    this.verifiLogin();
   }
 
-  Getuserprofile() {
-    return this.api.me(function (err, res) {
-      console.log(err, res)
+  Getuserprofile(): Promise<any> {
+
+    const api = this.api;
+    return new Promise(function (resolve, reject) {
+
+      api.me(function (err, res) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(res);
+        }
+      });
     });
   }
 
   Vote(voter, author, permlink, weight) {
+
     return this.api.vote(voter, author, permlink, weight, function (err, res) {
       console.log(err, res)
     });
   }
 
   Comment(parentAuthor, parentPermlink, author, permlink, title, body, jsonMetadata) {
-    return this.api.comment(parentAuthor, parentPermlink, author, permlink, title, body, jsonMetadata, function (err, res) {
-      console.log(err, res)
+    const api = this.api;
+    return new Promise(function (resolve, reject) {
+      api.comment(parentAuthor, parentPermlink, author, permlink, title, body, jsonMetadata, function (err, res) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(res);
+        }
+      });
+
     });
   }
 
@@ -67,6 +80,28 @@ export class SteemconnectProvider {
 
   getLoginURL() {
     return this.api.getLoginURL();
+  }
+
+  verifiLogin() {
+    if (localStorage.getItem("dataccess")) {
+      this.setAccessToken(JSON.parse(localStorage.getItem("dataccess")).access_token);
+    } else {
+      this.api = sc2.Initialize({
+        app: 'bloquetest',
+        callbackURL: 'http://localhost:8100',
+        scope: ['vote', 'comment']
+      });
+    }
+  }
+
+  setAccessToken(token) {
+    this.api = sc2.Initialize({
+      app: 'bloquetest',
+      callbackURL: 'http://localhost:8100',
+      scope: ['vote', 'comment'],
+      accessToken: token
+    });
+
   }
 
 }

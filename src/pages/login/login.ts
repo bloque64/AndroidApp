@@ -61,6 +61,7 @@ export class LoginPage {
 
     this.LoginSteemConnect().then(res => {
       localStorage.setItem('dataccess', JSON.stringify(res));
+      this.api.setAccessToken(res.access_token);
       this.navCtrl.setRoot(TabsPage);
     }).catch(err => {
       console.log(err);

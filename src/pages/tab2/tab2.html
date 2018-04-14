@@ -13,6 +13,34 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="card-background-page">
+
+  <ion-card *ngIf="me">
+
+
+    <!--<img src="{{getimg()}}" /> -->
+
+    <img src="{{ getProfileImage() }}">
+
+    <ion-card-content>
+      <ion-card-title>
+        {{me?.account.name}}
+        <ion-badge item-end>{{formatReputation(me?.account.reputation)}}</ion-badge>
+      </ion-card-title>
+      <p>
+        {{formatJsonMetadata(me?.account.json_metadata).profile.about}}
+      </p>
+    </ion-card-content>
+
+    <ion-item>
+      Poder de voto
+      <ion-badge item-end>{{me?.account.voting_power}}</ion-badge>
+    </ion-item>
+    <ion-item>
+      Posts
+      <ion-badge item-end>{{me?.account.post_count}}</ion-badge>
+    </ion-item>
+
+  </ion-card>
 
 </ion-content>

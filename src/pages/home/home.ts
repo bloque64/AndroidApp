@@ -1,7 +1,7 @@
 import { SteemProvider } from './../../providers/steem/steem';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
+import marked from 'marked';
 /**
  * Generated class for the HomePage page.
  *
@@ -15,18 +15,56 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private _steem: SteemProvider) {
+
+  articulos: any = [];
+  constructor(public alertCtrl: AlertController, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams, private _steem: SteemProvider) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HomePage');
-    this._steem.getDiscussionsByCreated(10).then(res => {
-      console.log(res);
+    this.load();
 
-    }).catch(err => {
-      console.log(err);
+  }
 
+  load() {
+    let loader = this.loadingCtrl.create({
+      content: "Cargando articulos"
     });
+    loader.present();
+    this._steem.getDiscussionsByCreated(10).then(res => {
+      this.articulos = res;
+      loader.dismiss();
+    }).catch(err => {
+      loader.dismiss();
+
+      this.showAlert('Error', 'Se produjo un error al traer los articulos, intenta nuevamente mas tarde');
+    });
+  }
+
+
+  showAlert(tittle, subTitle) {
+    let alert = this.alertCtrl.create({
+      title: tittle,
+      subTitle: subTitle,
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  formatBody(body) {
+
+    const html = marked(body);
+
+    const plaintext = String(html).replace(/<[^>]+>/gm, '');
+    return plaintext.substring(0, 150);
+  }
+
+  returnImg(json_metadata) {
+    return JSON.parse(json_metadata).image[0];
+  }
+
+  doRefresh(refresher) {
+        this.load();
+    refresher.complete();
   }
 
 }
