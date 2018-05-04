@@ -1,7 +1,7 @@
-import { TabsPage } from './../tabs/tabs';
 import { SteemconnectProvider } from './../../providers/steemconnect/steemconnect';
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
+import { TabsPage } from '../usuario/tabs/tabs';
 declare var window: any;
 
 
@@ -13,7 +13,8 @@ export class LoginPage {
 
   message: string;
 
-  constructor(public navCtrl: NavController, private api: SteemconnectProvider) {
+  constructor(public navCtrl: NavController,
+    public alertCtrl:AlertController, private api: SteemconnectProvider) {
     if (localStorage.getItem('dataccess')) {
       this.navCtrl.setRoot(TabsPage);
     }
@@ -65,6 +66,13 @@ export class LoginPage {
       this.navCtrl.setRoot(TabsPage);
     }).catch(err => {
       console.log(err);
+
+      let alert = this.alertCtrl.create({
+        title: "Error",
+        subTitle: "ocurrio un error al inciar sesion, intenta nuevamente",
+        buttons: ['OK']
+      });
+      alert.present();
 
     });
 

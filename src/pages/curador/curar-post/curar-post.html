@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar>
+
+    <ion-title>
+      Curar Post
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding id="page2">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content>
+
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list>
+
+    <ion-card *ngFor="let post of articulos">
+
+      <ion-item (click)="verPost(post.id)">
+
+        <h2>{{post.autor}}</h2>
+        <p>{{post.title}}</p>
+        <p item-end>{{post.created | date: 'dd/MM/yyyy H:mm'}} </p>
+      </ion-item>
+
+
+    </ion-card>
+
+  </ion-list>
+
+</ion-content>

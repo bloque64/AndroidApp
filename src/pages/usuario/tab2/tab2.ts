@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
-import { SteemconnectProvider } from '../../providers/steemconnect/steemconnect';
+
 import * as steem from 'steem';
+import { SteemconnectProvider } from '../../../providers/steemconnect/steemconnect';
 /**
  * Generated class for the Tab2Page page.
  *

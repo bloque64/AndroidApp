@@ -1,9 +1,9 @@
-import { SteemconnectProvider } from './../../providers/steemconnect/steemconnect';
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { Content } from 'ionic-angular';
 import marked from 'marked';
 import { Toast } from '@ionic-native/toast';
+import { SteemconnectProvider } from '../../../providers/steemconnect/steemconnect';
 
 /**
  * Generated class for the Tab1Page page.
@@ -176,6 +176,8 @@ export class Tab1Page {
       });
       loader.present();
 
+
+      /*
       this._SteemconnectProvider.Comment('', 'bloque64', author, permlink, this.tittle, body, jsonMetadata).then(res => {
         loader.dismiss();
         this.showAlert('Perfecto', 'Se posteo correctamente');
@@ -189,7 +191,7 @@ export class Tab1Page {
         this.showAlert('Error', 'Se produjo un error al postear, intenta nuevamente o contacta al administrador si el problema continua');
 
 
-      });
+      });*/
 
     }
 

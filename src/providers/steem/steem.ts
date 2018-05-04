@@ -43,10 +43,18 @@ export class SteemProvider {
 
   }
 
-  GetContentReplies(author, permlink) {
-    steem.api.getContentReplies(author, permlink, function (err, result) {
-      console.log(err, result);
+  GetContentReplies(author, permlink): Promise<any> {
+
+    return new Promise(function (resolve, reject) {
+      steem.api.getContentReplies(author, permlink, function (err, result) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
     });
+
   }
 
   getState() {
