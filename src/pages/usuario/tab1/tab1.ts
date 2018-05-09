@@ -1,3 +1,4 @@
+import { BloqueapiProvider } from './../../../providers/bloqueapi/bloqueapi';
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { Content } from 'ionic-angular';
@@ -28,7 +29,8 @@ export class Tab1Page {
   constructor(public alertCtrl: AlertController,
     private toast: Toast, public navCtrl: NavController,
     public navParams: NavParams, private _SteemconnectProvider: SteemconnectProvider
-    , public loadingCtrl: LoadingController) {
+    , public loadingCtrl: LoadingController,
+    private _API: BloqueapiProvider) {
   }
 
   ionViewDidLoad() {
@@ -176,6 +178,36 @@ export class Tab1Page {
       });
       loader.present();
 
+      let RevisionBody = {
+        autor: author,
+        token: JSON.parse(localStorage.getItem('dataccess')).access_token,
+        title: this.tittle,
+        cuerpo: this.plainText.toString(),
+        image: "imageprueba",
+        evaluado: false,
+        formateado: false,
+        curado: false,
+        categoria:this.tags.split(" ")[0],
+      };
+      this._API.enviarARevision(RevisionBody).then(res => {
+        loader.dismiss();
+        this.showAlert('Perfecto', 'Se posteo correctamente');
+        localStorage.removeItem("post");
+
+        this.tittle = "";
+        this.plainText = "";
+
+      }, err => {
+        loader.dismiss();
+        this.showAlert('Error', 'Se produjo un error al postear, intenta nuevamente o contacta al administrador si el problema continua');
+        console.log("este es el error en post : ", err);
+
+      }).catch(err => {
+        loader.dismiss();
+        this.showAlert('Error', 'Se produjo un error al postear, intenta nuevamente o contacta al administrador si el problema continua');
+
+
+      });
 
       /*
       this._SteemconnectProvider.Comment('', 'bloque64', author, permlink, this.tittle, body, jsonMetadata).then(res => {

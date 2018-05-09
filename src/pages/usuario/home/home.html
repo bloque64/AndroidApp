@@ -25,35 +25,35 @@
 
     <ion-item>
       <ion-avatar item-start>
-        <img src="img/marty-avatar.png">
+       <!-- <img src="img/marty-avatar.png"> -->
       </ion-avatar>
-      <h2>{{articulo.author}}</h2>
-      <p>{{articulo.created | date: 'dd/MM/yyyy H:mm'}}   </p>
-    </ion-item> 
+      <h2>{{articulo.autor}}</h2>
+      <p>{{articulo.publicado_fecha | date: 'dd/MM/yyyy H:mm'}}   </p>
+    </ion-item>
 
-    <img src="{{returnImg(articulo.json_metadata)}}">
+<!--    <img src="{{returnImg(articulo.json_metadata)}}"> -->
 
     <ion-card-content>
       <h2>{{articulo.title}}</h2>
-      <p>{{ formatBody(articulo.body)}}</p>
+      <p>{{ formatBody(articulo.cuerpo)}}</p>
     </ion-card-content>
 
     <ion-row>
       <ion-col>
         <button ion-button icon-left clear small>
           <ion-icon name="thumbs-up"></ion-icon>
-          <div>{{articulo.active_votes.length}} votes</div>
+          <div>{{articulo.votos}} votos</div>
         </button>
       </ion-col>
       <ion-col>
         <button ion-button icon-left clear small>
           <ion-icon name="text"></ion-icon>
-          <div>{{articulo.replies.length}} Comments</div>
+         <!-- <div>{{articulo.replies.length}} Comments</div> -->
         </button>
       </ion-col>
       <ion-col center text-center>
         <ion-note>
-          
+
         </ion-note>
       </ion-col>
     </ion-row>

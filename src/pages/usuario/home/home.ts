@@ -1,3 +1,4 @@
+import { BloqueapiProvider } from './../../../providers/bloqueapi/bloqueapi';
 import { SteemProvider } from './../../../providers/steem/steem';
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
@@ -17,7 +18,12 @@ export class HomePage {
 
 
   articulos: any = [];
-  constructor(public alertCtrl: AlertController, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams, private _steem: SteemProvider) {
+  constructor(public alertCtrl: AlertController,
+    public loadingCtrl: LoadingController,
+     public navCtrl: NavController,
+     public navParams: NavParams,
+     private _steem: SteemProvider,
+      private api: BloqueapiProvider) {
   }
 
   ionViewDidLoad() {
@@ -30,8 +36,10 @@ export class HomePage {
       content: "Cargando articulos"
     });
     loader.present();
-    this._steem.getDiscussionsByCreated(10).then(res => {
+    this.api.getSteemPublicaciones().then(res => {
       this.articulos = res;
+     console.log("articulos" ,res);
+
       loader.dismiss();
     }).catch(err => {
       loader.dismiss();

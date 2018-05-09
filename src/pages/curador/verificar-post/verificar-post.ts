@@ -1,7 +1,8 @@
 import { BloqueapiProvider } from './../../../providers/bloqueapi/bloqueapi';
-import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, AlertController, Content } from 'ionic-angular';
 import { LowerCasePipe } from '@angular/common';
+import marked from 'marked';
 
 @Component({
   selector: 'page-verificar-post',
@@ -10,7 +11,8 @@ import { LowerCasePipe } from '@angular/common';
 export class VerificarPostPage {
   // this tells the tabs component which Pages
   // should be each tab's root Page
-  articulo;
+  articulo: any = [];
+  @ViewChild(Content) content: Content;
   constructor(public navCtrl: NavController, private _api: BloqueapiProvider,
     public navParams: NavParams, public alertCtrl: AlertController) {
   }
@@ -19,12 +21,19 @@ export class VerificarPostPage {
     console.log(this.navParams.get("postID"));
 
     this.getArticulo(this.navParams.get("postID"));
+
+
+  }
+
+  toHtml() {
+    this.content = marked(this.articulo.cuerpo);
   }
 
   getArticulo(id) {
     this._api.getPublicaciones(id).then(res => {
       console.log(res);
       this.articulo = res;
+      this.toHtml();
     }, err => {
       console.log(err);
 

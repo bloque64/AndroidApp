@@ -10,6 +10,9 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class BloqueapiProvider {
 
+
+  url: string = "http://192.168.0.17:8000";
+
   constructor(public http: HttpClient) {
 
   }
@@ -20,26 +23,40 @@ export class BloqueapiProvider {
 
   getPublicaciones(id?): Promise<any> {
     if (id !== undefined) {
-      console.log("http://127.0.0.1:8000/publicaciones" + "/" + id);
 
-      return this.peticionGet("http://127.0.0.1:8000/publicaciones" + "/" + id);
+      return this.peticionGet(this.url + "/publicaciones" + "/" + id);
       // argument passed and not undefined
     } else {
-      return this.peticionGet("http://127.0.0.1:8000/publicaciones");
+      return this.peticionGet(this.url + "/publicaciones/");
+      // argument not passed or undefined
+    }
+
+  }
+
+  getSteemPublicaciones(id?): Promise<any> {
+    if (id !== undefined) {
+
+      return this.peticionGet(this.url + "/steemit" + "/" + id);
+      // argument passed and not undefined
+    } else {
+      return this.peticionGet(this.url + "/steemit");
       // argument not passed or undefined
     }
 
   }
 
   publicar(): Promise<any> {
-    return this.peticionPost("", "");
+    return this.peticionPost(this.url + "/publicaciones/", "");
   }
 
-  enviarARevision(): Promise<any> {
-    return this.peticionPost("", "");
+  enviarARevision(revision): Promise<any> {
+    return this.peticionPost(this.url + "/publicaciones/", revision);
   }
 
   curar(): Promise<any> {
+    return this.peticionPut("", "");
+  }
+  revisar(): Promise<any> {
     return this.peticionPut("", "");
   }
 

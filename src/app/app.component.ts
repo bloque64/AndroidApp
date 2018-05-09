@@ -1,3 +1,4 @@
+import { Tab1Page } from './../pages/usuario/tab1/tab1';
 import { TabsControllerPage } from './../pages/curador/tabs-controller/tabs-controller';
 import { Categoria, MenuProvider } from './../providers/menu/menu';
 import { InvitadoVerpostPage } from './../pages/invitado/invitado-verpost/invitado-verpost';
@@ -16,7 +17,7 @@ import { TabsPage } from '../pages/usuario/tabs/tabs';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage: any = TabsControllerPage;
+  rootPage: any = LoginPage;
   logincheck = false;
 
   menu: Categoria[] = [];
