@@ -1,10 +1,11 @@
 import { BloqueapiProvider } from './../../../providers/bloqueapi/bloqueapi';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef, Provider } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { Content } from 'ionic-angular';
 import marked from 'marked';
 import { Toast } from '@ionic-native/toast';
 import { SteemconnectProvider } from '../../../providers/steemconnect/steemconnect';
+import SimpleMDE from 'simplemde';
 
 /**
  * Generated class for the Tab1Page page.
@@ -25,17 +26,79 @@ export class Tab1Page {
   tittle;
 
   tags;
-
+  simplemde;
   constructor(public alertCtrl: AlertController,
     private toast: Toast, public navCtrl: NavController,
     public navParams: NavParams, private _SteemconnectProvider: SteemconnectProvider
     , public loadingCtrl: LoadingController,
-    private _API: BloqueapiProvider) {
+    private _API: BloqueapiProvider, private elRef: ElementRef) {
   }
 
   ionViewDidLoad() {
-    this.setValueifExist();
+    this.setValueifExist(); let a:any = "";
+    this.content = a;
   }
+  ionViewDidEnter() {
+
+    if(localStorage.getItem("smde_textMarkdownEditor")){
+      this.content = marked(localStorage.getItem("smde_textMarkdownEditor"));
+    }
+    if (!this.simplemde) {
+      this.simplemde = new SimpleMDE({
+        autofocus: true,
+        forceSync: true,
+        hideIcons: ["guide", "fullscreen","preview"],
+        autosave: {
+          enabled: true,
+          uniqueId: "textMarkdownEditor",
+          delay: 1000,
+        },
+        element: document.getElementById("editor"),
+        showIcons: ["code", "table", "horizontal-rule", "|", "side-by-side"],
+        insertTexts: {
+          horizontalRule: ["", "\n\n-----\n\n"],
+          image: ["![](http://", ")"],
+          link: ["[", "](http://)"],
+          table: ["", "\n\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text      | Text     |\n\n"],
+        },
+
+        lineWrapping: false,
+        parsingConfig: {
+          allowAtxHeaderWithoutSpace: true,
+          strikethrough: false,
+          underscoresBreakWords: true,
+        },
+      });
+      let simplemde = this.simplemde;
+      var content = this.content;
+      var callback = (res):Promise<any> => {
+        return new Promise((resolve, reject) => {
+          if (res) {
+            resolve(res);
+          } else {
+            reject("");
+          }
+        }).then(res => {
+          var a: any = "";
+          this.content = res + a;
+        }, err => {
+          this.content = err;
+        });
+
+      }
+
+      simplemde.codemirror.on("change", function () {
+
+        content = marked(simplemde.value());
+       // console.log(content);
+        callback(content);
+
+      });
+
+    }
+  }
+
+
 
   convert() {
     if (this.toggleVal == true) {
@@ -187,7 +250,7 @@ export class Tab1Page {
         evaluado: false,
         formateado: false,
         curado: false,
-        categoria:this.tags.split(" ")[0],
+        categoria: this.tags.split(" ")[0],
       };
       this._API.enviarARevision(RevisionBody).then(res => {
         loader.dismiss();

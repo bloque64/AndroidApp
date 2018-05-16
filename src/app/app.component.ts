@@ -17,7 +17,7 @@ import { TabsPage } from '../pages/usuario/tabs/tabs';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage: any = LoginPage;
+  rootPage: any = Tab1Page;
   logincheck = false;
 
   menu: Categoria[] = [];

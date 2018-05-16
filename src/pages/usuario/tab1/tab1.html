@@ -17,6 +17,10 @@
 
   <ion-input type="text" placeholder="Titulo" [(ngModel)]="tittle" (ionChange)="save()"> </ion-input>
 
+  <textarea id="editor">
+
+  </textarea>
+  <!--
   <ion-item>
     <ion-label>Vista Previa</ion-label>
     <ion-toggle color="secondary" [(ngModel)]="toggleVal" checked="toggleVal" (ionChange)="convert()"></ion-toggle>
@@ -25,7 +29,11 @@
   <ion-item [hidden]="toggleVal">
     <ion-textarea rows="6" [(ngModel)]="plainText" (ionChange)="save()" placeholder="Strat writing your markdown below..."></ion-textarea>
   </ion-item>
-  <ion-content [hidden]="!toggleVal">
+  -->
+    <h2>Vista previa</h2>
+
+
+  <ion-content>
     <div [innerHtml]="content"></div>
   </ion-content>
 
